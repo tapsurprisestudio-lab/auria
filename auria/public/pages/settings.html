@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>AURIA — Settings</title>
+<link rel="stylesheet" href="../css/styles.css">
+<style>
+body{
+  background:#0b1020;
+  color:white;
+  font-family:sans-serif;
+  margin:0;
+}
+.container{
+  padding:40px;
+  max-width:600px;
+  margin:auto;
+}
+.card{
+  background:#141a2e;
+  padding:25px;
+  border-radius:12px;
+  margin-bottom:20px;
+}
+input{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border-radius:8px;
+  border:none;
+}
+button{
+  margin-top:15px;
+  background:#5b7cff;
+  border:none;
+  padding:10px 18px;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+}
+.topbar{
+  padding:20px;
+  background:#11162a;
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h2>⚙️ الإعدادات</h2>
+</div>
+
+<div class="container">
+
+  <div class="card">
+    <h3>تغيير البريد الإلكتروني</h3>
+    <input type="email" placeholder="ادخل بريد جديد">
+    <button>حفظ التغيير</button>
+  </div>
+
+  <div class="card">
+    <h3>تغيير كلمة المرور</h3>
+    <input type="password" placeholder="كلمة المرور الجديدة">
+    <button>تحديث</button>
+  </div>
+
+  <div class="card">
+    <h3>تسجيل الخروج</h3>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+</div>
+
+<script>
+async function logout(){
+  await fetch('/api/auth/logout',{
+    method:'POST',
+    credentials:'include'
+  });
+  window.location='/login';
+}
+</script>
+
+</body>
+</html>
