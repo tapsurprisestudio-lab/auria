@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account — AURIA</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/auth.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+</head>
+<body>
+  <canvas id="particles" class="bg-particles"></canvas>
+  
+  <div class="auth-page">
+    <div class="auth-card animate-fade-in">
+      <a href="/" class="auth-logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">AURIA</span>
+      </a>
+      
+      <h1 class="auth-title">Begin Your Journey</h1>
+      <p class="auth-subtitle">Create your account and meet AURIA</p>
+      
+      <form id="signupForm" class="auth-form">
+        <div class="form-group">
+          <label class="form-label" for="name">Your Name</label>
+          <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            class="form-input" 
+            placeholder="What should AURIA call you?"
+            required
+            autocomplete="name"
+          >
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="email">Email</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            class="form-input" 
+            placeholder="your@email.com"
+            required
+            autocomplete="email"
+          >
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            class="form-input" 
+            placeholder="At least 6 characters"
+            required
+            autocomplete="new-password"
+            minlength="6"
+          >
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="confirmPassword">Confirm Password</label>
+          <input 
+            type="password" 
+            id="confirmPassword" 
+            name="confirmPassword" 
+            class="form-input" 
+            placeholder="Repeat your password"
+            required
+            autocomplete="new-password"
+          >
+        </div>
+        
+        <button type="submit" class="btn btn-primary w-full">
+          <span class="btn-text">Create Account</span>
+          <span class="btn-loading">
+            <span class="spinner" style="width: 20px; height: 20px;"></span>
+          </span>
+        </button>
+      </form>
+      
+      <p class="auth-switch">
+        Already have an account? 
+        <a href="/login">Sign in</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="/js/particles.js"></script>
+  <script src="/js/utils.js"></script>
+  <script>
+    // Check if already logged in
+    AURIA.auth.checkAuth().then(user => {
+      if (user) {
+        window.location.href = '/chat';
+      }
+    });
+
+    // Handle signup
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const form = e.target;
+      
+      // Validate passwords match
+      if (form.password.value !== form.confirmPassword.value) {
+        AURIA.ui.showToast('Passwords do not match', 'error');
+        return;
+      }
+      
+      const btn = form.querySelector('button[type="submit"]');
+      const btnText = btn.querySelector('.btn-text');
+      const btnLoading = btn.querySelector('.btn-loading');
+      
+      btn.disabled = true;
+      btnText.style.display = 'none';
+      btnLoading.style.display = 'block';
+      
+      try {
+        const data = await AURIA.api('/api/auth/register', {
+          method: 'POST',
+          body: {
+            name: form.name.value,
+            email: form.email.value,
+            password: form.password.value,
+            confirmPassword: form.confirmPassword.value
+          }
+        });
+        
+        AURIA.ui.showToast('Welcome to AURIA, ' + data.user.name + '!', 'success');
+        setTimeout(() => {
+          window.location.href = '/chat';
+        }, 500);
+      } catch (error) {
+        AURIA.ui.showToast(error.message, 'error');
+        btn.disabled = false;
+        btnText.style.display = 'block';
+        btnLoading.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
