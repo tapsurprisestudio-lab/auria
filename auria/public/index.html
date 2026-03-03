@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AURIA — Your Intelligent Emotional Companion</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/landing.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+</head>
+<body>
+  <canvas id="particles" class="bg-particles"></canvas>
+  
+  <nav class="navbar">
+    <div class="container flex items-center justify-between">
+      <a href="/" class="logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">AURIA</span>
+      </a>
+      <div class="nav-links">
+        <a href="/login" class="btn btn-ghost">Sign In</a>
+        <a href="/signup" class="btn btn-primary">Start Your Journey</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-content container">
+        <h1 class="hero-title animate-fade-in">AURIA</h1>
+        <p class="hero-subtitle animate-fade-in" style="animation-delay: 0.2s">Your Intelligent Emotional Companion</p>
+        <p class="hero-tagline animate-fade-in" style="animation-delay: 0.4s">"A safe space to think, feel, and grow."</p>
+        <div class="hero-cta animate-fade-in" style="animation-delay: 0.6s">
+          <a href="/signup" class="btn btn-primary btn-lg">Start Your Journey</a>
+          <a href="/login" class="btn btn-secondary btn-lg">Sign In</a>
+        </div>
+      </div>
+      <div class="hero-glow"></div>
+    </section>
+
+    <!-- What is AURIA -->
+    <section class="section what-is">
+      <div class="container">
+        <div class="glass-card">
+          <h2 class="section-title">What is AURIA?</h2>
+          <p class="section-desc">
+            AURIA is your personal AI companion designed to provide empathetic, thoughtful support. 
+            She listens without judgment, helps you explore your thoughts, and guides you toward 
+            personal growth. Whether you need to vent, brainstorm, or simply have someone to talk to, 
+            AURIA is here for you.
+          </p>
+          <div class="features-grid">
+            <div class="feature-item">
+              <div class="feature-icon">👂</div>
+              <h3>Active Listening</h3>
+              <p>AURIA truly hears you, processing your words with care and attention.</p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">💭</div>
+              <h3>Thoughtful Reflection</h3>
+              <p>She helps you gain perspective and explore your thoughts deeply.</p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">🌱</div>
+              <h3>Personal Growth</h3>
+              <p>Guided support to help you understand yourself better and grow.</p>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">💜</div>
+              <h3>Emotional Support</h3>
+              <p>Always available to provide comfort and understanding when you need it.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section how-it-works">
+      <div class="container">
+        <h2 class="section-title text-center">How It Works</h2>
+        <div class="steps">
+          <div class="step-card">
+            <div class="step-number">01</div>
+            <h3>Speak</h3>
+            <p>Share your thoughts, feelings, or questions freely with AURIA.</p>
+          </div>
+          <div class="step-arrow">→</div>
+          <div class="step-card">
+            <div class="step-number">02</div>
+            <h3>Reflect</h3>
+            <p>AURIA processes your words and responds with empathy and insight.</p>
+          </div>
+          <div class="step-arrow">→</div>
+          <div class="step-card">
+            <div class="step-number">03</div>
+            <h3>Grow</h3>
+            <p>Gain new perspectives and work toward personal understanding.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Safety / Ethics -->
+    <section class="section safety">
+      <div class="container">
+        <div class="glass-card safety-card">
+          <div class="safety-icon">⚠️</div>
+          <h2>Important Notice</h2>
+          <p>
+            AURIA is an AI companion designed to provide emotional support and a listening ear. 
+            <strong>She is not a licensed therapist, counselor, or mental health professional.</strong>
+          </p>
+          <p>
+            If you are experiencing a mental health crisis, thoughts of self-harm, or need immediate help, 
+            please reach out to a qualified mental health professional or crisis service:
+          </p>
+          <div class="crisis-links">
+            <a href="https://988lifeline.org" target="_blank" rel="noopener">988 Suicide & Crisis Lifeline</a>
+            <a href="https://www.betterhelp.com" target="_blank" rel="noopener">BetterHelp</a>
+            <a href="https://www.crisistextline.org" target="_blank" rel="noopener">Crisis Text Line</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-line"></div>
+      <p class="footer-text">AURIA — A safe space to think, feel, and grow.</p>
+      <p class="footer-copyright">© 2026 AURIA. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/js/particles.js"></script>
+  <script>
+    // Check if already logged in
+    AURIA.auth.checkAuth().then(user => {
+      if (user) {
+        window.location.href = '/chat';
+      }
+    });
+  </script>
+</body>
+</html>
