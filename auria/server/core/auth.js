@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your_super_secret_jwt_key_change_in_production';
+const JWT_SECRET =
+  process.env.JWT_SECRET || 'your_super_secret_jwt_key_change_in_production';
 
 function authenticateToken(req, res, next) {
   const token = req.cookies.token;
-  
+
   if (!token) {
     return res.status(401).json({ error: 'Authentication required' });
   }
@@ -20,7 +21,7 @@ function authenticateToken(req, res, next) {
 
 function optionalAuth(req, res, next) {
   const token = req.cookies.token;
-  
+
   if (token) {
     try {
       const decoded = jwt.verify(token, JWT_SECRET);
@@ -29,6 +30,7 @@ function optionalAuth(req, res, next) {
       // Token invalid, but that's okay for optional auth
     }
   }
+
   next();
 }
 
