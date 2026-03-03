@@ -105,7 +105,7 @@ router.post('/conversations', authenticateToken, async (req, res) => {
 });
 
 // Send message to AURIA
-router.post('/chat/send', authenticateToken, async (req, res) => {
+router.post('/send', authenticateToken, async (req, res) => {
   try {
     let { conversationId, message } = req.body;
 
