@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In — AURIA</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/auth.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+</head>
+<body>
+  <canvas id="particles" class="bg-particles"></canvas>
+  
+  <div class="auth-page">
+    <div class="auth-card animate-fade-in">
+      <a href="/" class="auth-logo">
+        <span class="logo-icon">✦</span>
+        <span class="logo-text">AURIA</span>
+      </a>
+      
+      <h1 class="auth-title">Welcome Back</h1>
+      <p class="auth-subtitle">Sign in to continue your journey</p>
+      
+      <form id="loginForm" class="auth-form">
+        <div class="form-group">
+          <label class="form-label" for="email">Email</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            class="form-input" 
+            placeholder="your@email.com"
+            required
+            autocomplete="email"
+          >
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            class="form-input" 
+            placeholder="••••••••"
+            required
+            autocomplete="current-password"
+          >
+        </div>
+        
+        <div class="form-footer">
+          <a href="#" class="forgot-link" id="forgotBtn">Forgot password?</a>
+        </div>
+        
+        <button type="submit" class="btn btn-primary w-full">
+          <span class="btn-text">Sign In</span>
+          <span class="btn-loading">
+            <span class="spinner" style="width: 20px; height: 20px;"></span>
+          </span>
+        </button>
+      </form>
+      
+      <p class="auth-switch">
+        Don't have an account? 
+        <a href="/signup">Create one</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="/js/particles.js"></script>
+  <script src="/js/utils.js"></script>
+  <script>
+    // Check if already logged in
+    AURIA.auth.checkAuth().then(user => {
+      if (user) {
+        window.location.href = '/chat';
+      }
+    });
+
+    // Handle forgot password
+    document.getElementById('forgotBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      AURIA.ui.showModal(
+        'Reset Password',
+        '<p>Password reset functionality will be available in a future update. Please contact support if you need assistance.</p>',
+        [{ label: 'OK', action: 'close', class: 'btn-primary' }]
+      );
+    });
+
+    // Handle login
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const form = e.target;
+      const btn = form.querySelector('button[type="submit"]');
+      const btnText = btn.querySelector('.btn-text');
+      const btnLoading = btn.querySelector('.btn-loading');
+      
+      btn.disabled = true;
+      btnText.style.display = 'none';
+      btnLoading.style.display = 'block';
+      
+      try {
+        const data = await AURIA.api('/api/auth/login', {
+          method: 'POST',
+          body: {
+            email: form.email.value,
+            password: form.password.value
+          }
+        });
+        
+        AURIA.ui.showToast('Welcome back, ' + data.user.name + '!', 'success');
+        setTimeout(() => {
+          window.location.href = '/chat';
+        }, 500);
+      } catch (error) {
+        AURIA.ui.showToast(error.message, 'error');
+        btn.disabled = false;
+        btnText.style.display = 'block';
+        btnLoading.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
